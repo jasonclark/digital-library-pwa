@@ -217,6 +217,7 @@ footer {
 /*medium screen view < 801px (based on 16px browser default)*/
 @media all and (max-width:50.1em) {
   header h1 {font-size:1.3em;}
+  .featured .feature-item {padding-left:0;}
 }
 /*small screen view < 481px (based on 16px browser default)*/
 @media all and (max-width:30.063em) {
