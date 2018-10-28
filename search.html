@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Search - James Willard Schultz Collection, Montana State University (MSU) Library</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" href="./img/icons/favicon.png">
+  <meta name="theme-color" content="#213c69" />
+  <meta name="description" content="Progressive Web App Template for digital collections using James Willard Schultz Photos & Personal Papers Collection at Montana State University (MSU) Library. James Willard Schultz Photos & Personal Papers Collection includes photos & documents of Blackfeet, Blood, Kootenai, Shoshone and Arapaho Native Americans, Glacier and Waterton Lakes National Parks, as well as his professional writing career and personal papers.">
+  <!-- iOS -->
+  <link rel="apple-touch-icon" href="./img/icons/icon-144x144.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="black" />
+  <meta name="mobile-web-app-title" content="SchultzPWA">
+</head>
+<body>
+  <header>
+    <h1>James Willard Schultz Collection</h1>
+  </header>
+  <nav>
+    <a href="#search">Search</a>
+    <a href="#browse">Browse</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="alert" role="alert" hidden>Your browser does not support ServiceWorker. The app will not be available offline.</div>
+  <main>
+    <h2 id="speakers">Search James Willard Schultz Collection</h2>
+    <form action="./search.html" method="get">
+      <label class="hidden" for="search-box">Search</label>
+      <input class="text" type="text" id="search-box" name="query" maxlength="75" placeholder="Keywords, title..."/>
+      <input class="submit" type="submit" value="Search" />
+    </form>
+    <ul id="search-results"></ul>
+  </main>
+  <footer>
+    <p>© Copyright Montana State University (MSU) Library</p>
+    <p>
+      Created by
+      <a href="https://twitter.com/jaclark">@jaclark</a>, the source code is available on
+      <a href="https://github.com/jasonclark">GitHub</a>.
+    </p>
+  </footer>
+  <!--<script src="./app.js"></script>-->
+  <script src="./scripts/lunr.min.js"></script>
+  <script src="./scripts/search.js"></script>
+</body>
+</html>
