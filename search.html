@@ -28,12 +28,13 @@
   <div class="alert" role="alert" hidden>Your browser does not support ServiceWorker. The app will not be available offline.</div>
   <main>
     <h2 id="speakers">Search James Willard Schultz Collection</h2>
-    <form action="./search.html" method="get">
+    <form action="./search.html" class="search-form" id="search-form" method="get">
       <label class="hidden" for="search-box">Search</label>
-      <input class="text" type="text" id="search-box" name="query" maxlength="75" placeholder="Keywords, title..."/>
+      <input class="text" type="text" id="search-term" name="q" maxlength="75" placeholder="Keywords, title..."/>
       <input class="submit" type="submit" value="Search" />
     </form>
-    <ul id="search-results"></ul>
+    <p id="search-message"></p>
+    <ol id="search-results"></ol>
   </main>
   <footer>
     <p>© Copyright Montana State University (MSU) Library</p>
@@ -43,8 +44,7 @@
       <a href="https://github.com/jasonclark">GitHub</a>.
     </p>
   </footer>
-  <!--<script src="./app.js"></script>-->
-  <script src="./scripts/lunr.min.js"></script>
+  <script src="./app.js"></script>
   <script src="./scripts/search.js"></script>
 </body>
 </html>
