@@ -41,6 +41,7 @@ class DigLibApp {
     });
     observer.observe(header);
   }
+
   async loadFeatured() {
     this.featured = await this.fetchJSON('./items.json');
 
@@ -50,10 +51,10 @@ class DigLibApp {
   }
 
   async loadTimeline() {
-    const rawSchedule = await this.fetchJSON('./items.json');
+    const rawTimeline = await this.fetchJSON('./items.json');
 
     // Add speaker details to array
-    this.timeline = rawSchedule.map(this.addObjectDetails, this);
+    this.timeline = rawTimeline.map(this.addObjectDetails, this);
     this.timelineDiv.innerHTML = this.timeline
       .map(this.toTimelineBlock)
       .join('\n');
