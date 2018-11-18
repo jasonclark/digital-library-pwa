@@ -21,7 +21,7 @@ fetch('./items.json').then(response => {
           }
         }
 
-        document.getElementById("search-message").innerHTML += `Your search for <em>${searchterm}</em> has ${j} results`;
+        document.getElementById("search-message").innerHTML += `Your search for <em>${searchterm}</em> has ${j} result(s)`;
         return false;
       }
     });
