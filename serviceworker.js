@@ -2,12 +2,13 @@
 
 const cacheName = 'diglib-pwa-v1';
 const staticAssets = [
-  './', 
-  './about.html',
-  './index.html', 
+  './',
+  './index.html',
+  './search.html',   
   './app.js', 
   './styles.css', 
   './items.json', 
+  './scripts/search.js',
   './manifest.json'
 ];
 
