@@ -16,7 +16,7 @@ fetch('./items.json').then(response => {
           datalower = (data[i].item.titleInfo_title).toLowerCase();
 
           if (datalower.includes(searchtermlower)) {
-            document.getElementById("search-results").innerHTML += `<li><img alt="${data[i].item.titleInfo_title}" src="${data[i].item.identifier}" /><p>${data[i].item.titleInfo_title}</p><p>${data[i].item.abstract}</p><p>${data[i].item.extension}</p><p>${data[i].item.originInfo_dateIssued}</p></li>`;
+            document.getElementById("search-results").innerHTML += `<li><a href="./item.html?id=${data[i].item.recordInfo_recordIdentifier}"><img alt="${data[i].item.titleInfo_title}" src="${data[i].item.identifier}" /></a><p>${data[i].item.titleInfo_title}</p><p>${data[i].item.abstract}</p><p>${data[i].item.extension}</p><p>${data[i].item.originInfo_dateIssued}</p></li>`;
             j++;
           }
         }
