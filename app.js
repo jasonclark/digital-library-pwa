@@ -1,6 +1,7 @@
 class DigLibApp {
   constructor() {
     this.featuredDiv = document.querySelector('.featured');
+    //this.itemDiv = document.querySelector('.item');
     this.timelineDiv = document.querySelector('.timeline');
     this.init();
   }
@@ -12,7 +13,9 @@ class DigLibApp {
     this.addLoadingIndicatorDelay();
 
     await this.loadFeatured();
+    //await this.loadItem();
     await this.loadTimeline();
+
   }
 
   addLoadingIndicatorDelay() {
@@ -42,6 +45,20 @@ class DigLibApp {
     observer.observe(header);
   }
 
+  getQueryVariable(variable) {
+    const query = window.location.search.substring(1);
+    const vars = query.split('&');
+
+    for (let i = 0; i < vars.length; i++) {
+      const pair = vars[i].split('=');
+
+      if (pair[0] === variable) {
+        return decodeURIComponent(pair[1].replace(/\+/g, '%20'));
+      }
+    }
+  }
+  //const searchTerm = getQueryVariable('query');
+
   async loadFeatured() {
     this.featured = await this.fetchJSON('./items.json');
 
@@ -49,11 +66,20 @@ class DigLibApp {
       .map(this.toFeatureBlock)
       .join('\n');
   }
+  /*
+  async loadItem(id) {
+    const id = getQueryVariable('id');
+    const rawItems = await this.fetchJSON('./items.json');
 
+    this.item = rawItems.map(this.addObjectDetails, this);
+    this.itemDiv.innerHTML = this.item
+      .map(this.toItemBlock)
+      .join('\n');
+  }
+  */
   async loadTimeline() {
     const rawTimeline = await this.fetchJSON('./items.json');
 
-    // Add speaker details to array
     this.timeline = rawTimeline.map(this.addObjectDetails, this);
     this.timelineDiv.innerHTML = this.timeline
       .map(this.toTimelineBlock)
@@ -67,7 +93,18 @@ class DigLibApp {
           <div>${items.item.originInfo_dateIssued}</div>
         </div>`;
   }
-
+  /*
+  toItemBlock(items) {
+    return `
+        <h2>Item: ${items.item.titleInfo_title}</h2>
+        <li>
+          <img alt="${items.item.titleInfo_title}" src="${items.item.identifier}" />
+          <p>${items.item.titleInfo_title}</p><p>${items.item.abstract}</p>
+          <p>${items.item.extension}</p>
+          <p>${items.item.originInfo_dateIssued}</p>
+        </li>`;
+  }
+  */
   toTimelineBlock(items) {
     return `
       <div class="timeline-item ${items.item.genre}">
@@ -108,9 +145,9 @@ async function registerSW() {
   if ('serviceWorker' in navigator) {
     try {
       await navigator.serviceWorker.register('./serviceworker.js');
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      console.log('ServiceWorker registration succeeded.');
     } catch (e) {
-      alert('ServiceWorker registration failed. Sorry about that.');
+      console.log('ServiceWorker registration failed.');
     }
   } else {
     document.querySelector('.alert').removeAttribute('hidden');
