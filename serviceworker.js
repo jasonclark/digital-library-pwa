@@ -1,10 +1,20 @@
-// Hola! This is an over-simplified ServiceWorker for a digital library PWA template.
+// Hola! This is a ServiceWorker for a digital library PWA template.
+// HTML files: try the network first, then the cache.
+// Other files: try the cache first, then the network.
+// Both: cache a fresh version if possible.
+// (beware: the cache will grow and grow; there's no cleanup)
 
-const cacheName = 'diglib-pwa-v1';
-const staticAssets = [
+const version = 'diglib-pwa-v1::';
+const cacheName = version + 'static';
+const offlinePage = './offline.html';
+
+const coreAssets = [
   './',
+  './about.html',
   './index.html',
-  './search.html',   
+  './item.html',
+  './search.html',
+  './offline.html',  
   './app.js', 
   './styles.css', 
   './items.json', 
@@ -12,39 +22,44 @@ const staticAssets = [
   './manifest.json'
 ];
 
-self.addEventListener('install', async event => {
-  const cache = await caches.open(cacheName);
-  await cache.addAll(staticAssets);
+addEventListener('install', installEvent => {
+  skipWaiting();
+  installEvent.waitUntil(
+    caches.open(cacheName)
+    .then( cache => {
+      //return cache.add(offlinePage);
+      return cache.addAll(coreAssets);
+    })
+  );
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+addEventListener('activate', activateEvent => {
+  clients.claim();
 });
 
-self.addEventListener('fetch', event => {
-  const req = event.request;
-
-  if (/.*(json)$/.test(req.url)) {
-    event.respondWith(networkFirst(req));
-  } else {
-    event.respondWith(cacheFirst(req));
+addEventListener('fetch',  fetchEvent => {
+  const request = fetchEvent.request;
+  if (request.method !== 'GET') {
+    return;
   }
+  fetchEvent.respondWith(async function() {
+    const responseFromFetch = fetch(request);
+    fetchEvent.waitUntil(async function() {
+      const responseCopy = (await responseFromFetch).clone();
+      const myCache = await caches.open(cacheName);
+      await myCache.put(request, responseCopy);
+    }());
+    if (request.headers.get('Accept').includes('text/html')) {
+      try {
+        return await responseFromFetch;
+      }
+      catch(error) {
+        const responseFromCache = await caches.match(request);
+        return responseFromCache || caches.match(offlinePage);
+      }
+    } else {
+      const responseFromCache = await caches.match(request);
+      return responseFromCache || responseFromFetch;
+    }
+  }());
 });
-
-async function cacheFirst(req) {
-  const cache = await caches.open(cacheName);
-  const cachedResponse = await cache.match(req);
-  return cachedResponse || networkFirst(req);
-}
-
-async function networkFirst(req) {
-  const cache = await caches.open(cacheName);
-  try {
-    const fresh = await fetch(req);
-    cache.put(req, fresh.clone());
-    return fresh;
-  } catch (e) {
-    const cachedResponse = await cache.match(req);
-    return cachedResponse;
-  }
-}
