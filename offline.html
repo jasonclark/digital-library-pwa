@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Offline - James Willard Schultz Collection, Montana State University (MSU) Library</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" href="./img/icons/favicon.png">
+  <meta name="theme-color" content="#213c69" />
+  <meta name="description" content="Progressive Web App Template for digital collections using James Willard Schultz Photos & Personal Papers Collection at Montana State University (MSU) Library. James Willard Schultz Photos & Personal Papers Collection includes photos & documents of Blackfeet, Blood, Kootenai, Shoshone and Arapaho Native Americans, Glacier and Waterton Lakes National Parks, as well as his professional writing career and personal papers.">
+  <!-- iOS -->
+  <link rel="apple-touch-icon" href="./img/icons/icon-144x144.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="black" />
+  <meta name="mobile-web-app-title" content="SchultzPWA">
+</head>
+<body>
+  <header>
+    <h1>James Willard Schultz Collection</h1>
+  </header>
+  <nav>
+    <a href="./search.html">Search</a>
+    <a href="./index.html#browse">Browse</a>
+    <a href="./about.html">About</a>
+  </nav>
+  <div class="alert" role="alert" hidden>Your browser does not support ServiceWorker. The app will not be available offline.</div>
+  <main class="item">
+  <h2>Whoops! The network is unavailable and this page is offline.</h2>
+  <p>If you’re seeing this, you likely got here because your browser supports <a href="http://www.w3.org/TR/service-workers/">Service Workers</a>, a web standard that helps me make things better for you when you don’t have an Internet connection. That means that it’s likely that at least some of this site’s content is available to you, even offline.</p>
+  <p><a href="./index.html">Try again from the home page</a> or navigate using the pages we have saved.</p>
+  <p class="offline-content"></p>
+  <script>
+    if ('serviceWorker' in navigator) {
+
+      navigator.serviceWorker.register('serviceworker.js');
+
+      function getCachedPages(cb) {
+        return new Promise(function (res, rej) {
+          window.caches.keys().then(function (cacheNames) {
+
+            cacheName = cacheNames.filter(function (cacheName) {
+              //return cacheName.indexOf("::images") !== -1;
+              return cacheName.indexOf("::static") !== -1;
+            })[0]
+
+            caches.open(cacheName).then(function (cache) {
+              return cache.keys().then(function (requests) {
+                var urls = requests.filter(function (request) {
+                  return request.url.indexOf("/~jason/files/digital-library-pwa/") !== -1;
+                }).map(function (request) {
+                  return request.url;
+                });
+                res(urls.sort());
+              });
+            });
+
+          });
+        });
+      }
+
+      getCachedPages().then(function (urls) {
+        if (urls.length) {
+          document.querySelector('.offline-content').innerHTML = '<p>That page is not available for offline reading, but these pages and files are:</p>';
+          var ul = document.createElement('ul');
+          urls.forEach(function (url) {
+            var li = document.createElement('li');
+            li.innerHTML = '<a href="' + url + '">' + url + '</a>';
+            ul.appendChild(li);
+          });
+          document.querySelector('.offline-content').appendChild(ul);
+        }
+      });
+
+    }
+  </script>
+  </main>
+  <footer>
+    <p>© Copyright Montana State University (MSU) Library</p>
+    <p>
+      Created by
+      <a href="https://twitter.com/jaclark">@jaclark</a>, the source code is available on
+      <a href="https://github.com/jasonclark">GitHub</a>.
+    </p>
+  </footer>
+  <script src="./app.js"></script>
+</body>
+</html>
