@@ -18,7 +18,7 @@ const coreAssets = [
   './app.js', 
   './styles.css', 
   './items.json', 
-  './scripts/search.js',
+  //'./scripts/search.js',
   './manifest.json'
 ];
 
