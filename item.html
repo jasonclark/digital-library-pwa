@@ -25,6 +25,19 @@
     <a href="./index.html#browse">Browse</a>
     <a href="./about.html">About</a>
   </nav>
+  <div class="alert" role="alert" hidden>Your browser does not support ServiceWorker. The app will not be available offline.</div>
+  <main class="item">
+    <div class="loader" hidden>Loading...</div>
+  </main>
+  <footer>
+    <p>© Copyright Montana State University (MSU) Library</p>
+    <p>
+      Created by
+      <a href="https://twitter.com/jaclark">@jaclark</a>, the source code is available on
+      <a href="https://github.com/jasonclark">GitHub</a>.
+    </p>
+  </footer>
+  <script src="./app.js"></script>
   <script>
   function getQueryVariable(variable) {
     const query = window.location.search.substring(1);
@@ -78,18 +91,5 @@
     } 
   });
   </script>
-  <div class="alert" role="alert" hidden>Your browser does not support ServiceWorker. The app will not be available offline.</div>
-  <main class="item">
-    <div class="loader" hidden>Loading...</div>
-  </main>
-  <footer>
-    <p>© Copyright Montana State University (MSU) Library</p>
-    <p>
-      Created by
-      <a href="https://twitter.com/jaclark">@jaclark</a>, the source code is available on
-      <a href="https://github.com/jasonclark">GitHub</a>.
-    </p>
-  </footer>
-  <script src="./app.js"></script>
 </body>
 </html>
