@@ -1,0 +1,27 @@
+#rewrite rules for URLs and directory patterns
+#https://httpd.apache.org/docs/current/mod/mod_rewrite.html#RewriteEngine
+#https://httpd.apache.org/docs/current/mod/core.html#options
+#https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
+#https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriteoptions
+<IfModule mod_rewrite.c>
+  #Options +FollowSymLinks
+  #Options +SymLinksIfOwnerMatch
+  RewriteEngine On
+
+  #check for 200 header, legitimate url 
+  RewriteCond %{ENV:REDIRECT_STATUS} 200
+  RewriteRule .* - [L]
+
+  #redirect from the `http://` to the `https://` version of the URL.
+  #https://wiki.apache.org/httpd/RewriteHTTPToHTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  #RewriteCond %{HTTPS} !=on
+  #RewriteRule ^(.*)$ https://%{HTTP_HOST}/~jason/$1 [R=301,L]
+  #RewriteRule ^(/~jason|index\.html|about\.html|code\.html|talks\.html)$ https://%{HTTP_HOST}/~jason/$1 [R=301,L]
+  #RewriteRule ^(index\.html|about\.html|code\.html|contact\.html|search\.html|sitemap\.html|talks\.html)$ https://%{HTTP_HOST}/~jason/$1 [R=301,L]
+
+  #remove need to have .html extension in filename
+  #RewriteCond %{REQUEST_FILENAME}.html -f
+  #RewriteRule ^(.*)$ $1.html [L,QSA]
+</IfModule>
