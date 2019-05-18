@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
   <title>Item - James Willard Schultz Collection, Montana State University (MSU) Library</title>
-  <link rel="stylesheet" href="./styles.css">
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" type="image/png" href="./img/icons/favicon.png">
-  <meta name="theme-color" content="#213c69" />
-  <meta name="description" content="Progressive Web App Template for digital collections using James Willard Schultz Photos & Personal Papers Collection at Montana State University (MSU) Library. James Willard Schultz Photos & Personal Papers Collection includes photos & documents of Blackfeet, Blood, Kootenai, Shoshone and Arapaho Native Americans, Glacier and Waterton Lakes National Parks, as well as his professional writing career and personal papers.">
+  <link rel="stylesheet" href="./styles.css"/>
+  <link rel="manifest" href="./manifest.json"/>
+  <link rel="icon" type="image/png" href="./img/icons/favicon.png"/>
+  <meta name="theme-color" content="#213c69"/>
+  <meta name="description" content="Progressive Web App Template for digital collections using James Willard Schultz Photos & Personal Papers Collection at Montana State University (MSU) Library. James Willard Schultz Photos & Personal Papers Collection includes photos & documents of Blackfeet, Blood, Kootenai, Shoshone and Arapaho Native Americans, Glacier and Waterton Lakes National Parks, as well as his professional writing career and personal papers."/>
   <!-- iOS -->
-  <link rel="apple-touch-icon" href="./img/icons/icon-144x144.png" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-status-bar-style" content="black" />
-  <meta name="mobile-web-app-title" content="SchultzPWA">
+  <link rel="apple-touch-icon" href="./img/icons/icon-144x144.png"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="mobile-web-app-status-bar-style" content="black"/>
+  <meta name="mobile-web-app-title" content="SchultzPWA"/>
 </head>
 <body>
   <header>
@@ -63,18 +63,21 @@
           
           if (Number.isNaN(queryID)) {
             document.querySelector('.item').innerHTML += `
-            <h2>Item: Error in finding item!</h2>
+            <h2>Error in finding item!</h2>
             <p>Query type not supported.</p>
             `;
           }
 
           for (i = 0; i < data.length; i++) {
-            itemID = Number(data[i].item.recordInfo_recordIdentifier);
+            let itemID = Number(data[i].item.recordInfo_recordIdentifier);
+            //get filename from identifier -> unique given this data in items.json
+            let urlPath = data[i].item.identifier;
+            let fileName = urlPath.substring(urlPath.lastIndexOf('/')+1).split('-').pop();
 
             if (itemID === queryID) {
               document.querySelector('.item').innerHTML += `
-              <h2>Item: ${data[i].item.titleInfo_title}</h2>
-              <ul>
+              <h2>${data[i].item.titleInfo_title}</h2>
+              <ul class="item">
               <li>
                 <img alt="${data[i].item.titleInfo_title}" src="${data[i].item.identifier}" />
                 <p>${data[i].item.titleInfo_title}</p>
@@ -82,6 +85,7 @@
                 <p>${data[i].item.extension}</p>
                 <p>${data[i].item.originInfo_dateIssued}</p>
                 <p>Record ID: ${data[i].item.recordInfo_recordIdentifier}</p>
+                <a class="quality" href="https://arc.lib.montana.edu/schultz-0010/objects/hres-${fileName}">Object view</a>
               </li>
               </ul>
               `;
