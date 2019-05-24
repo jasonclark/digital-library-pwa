@@ -17,16 +17,16 @@
   <meta name="mobile-web-app-title" content="SchultzPWA">
 </head>
 <body>
-  <header>
+  <header role="banner">
     <h1>James Willard Schultz Collection</h1>
   </header>
-  <nav>
+  <nav role="navigation">
     <a href="./search.html">Search</a>
     <a href="./index.html#browse">Browse</a>
     <a href="./about.html">About</a>
   </nav>
   <div class="alert" role="alert" hidden>Your browser does not support ServiceWorker. The app will not be available offline.</div>
-  <main class="item">
+  <main class="item" role="main">
   <h2>Whoops! The network is unavailable and this page is offline.</h2>
   <p>If you’re seeing this, you likely got here because your browser supports <a href="http://www.w3.org/TR/service-workers/">Service Workers</a>, a web standard that helps me make things better for you when you don’t have an Internet connection. That means that it’s likely that at least some of this site’s content is available to you, even offline.</p>
   <p><a href="./index.html">Try again from the home page</a> or navigate using the pages we have saved.</p>
@@ -76,7 +76,7 @@
     }
   </script>
   </main>
-  <footer>
+  <footer role="contentinfo">
     <p>© Copyright Montana State University (MSU) Library</p>
     <p>
       Created by
