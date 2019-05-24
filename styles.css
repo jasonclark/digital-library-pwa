@@ -114,6 +114,15 @@ h2 {
   letter-spacing: 0.0625rem;
 }
 
+img,
+video {
+  max-width: 100%;
+}
+
+img {
+  border-style: none;
+}
+
 input, textarea, select {border:1px solid #ccc;font-size:1em;padding:3px;margin:0;vertical-align:middle;}
 input.text {width:20em;height:40px;padding:6px 12px;line-height:1.42857143;background-image:none;border:1px solid #ccc;border-radius:4px}
 input.text:focus {border-color:#66afe9;outline:0;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)}
