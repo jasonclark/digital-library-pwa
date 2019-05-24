@@ -17,16 +17,16 @@
   <meta name="mobile-web-app-title" content="SchultzPWA"/>
 </head>
 <body>
-  <header>
+  <header role="banner">
     <h1>James Willard Schultz Collection</h1>
   </header>
-  <nav>
+  <nav role="navigation">
     <a href="./search.html">Search</a>
     <a href="./index.html#browse">Browse</a>
     <a href="./about.html">About</a>
   </nav>
   <div class="alert" role="alert" hidden>Your browser does not support ServiceWorker. The app will not be available offline.</div>
-  <main>
+  <main role="main">
     <h2>Search James Willard Schultz Collection</h2>
     <form action="./search.html" class="search-form" id="search-form" method="GET" role="search">
       <label class="hidden" for="search-term">Search</label>
@@ -36,7 +36,7 @@
     <p id="search-message" aria-live="polite">Use the <a href="#search-form">search form</a> above to search for items.</p>
     <ol id="search-results"></ol>
   </main>
-  <footer>
+  <footer role="contentinfo">
     <p>© Copyright Montana State University (MSU) Library</p>
     <p>
       Created by
