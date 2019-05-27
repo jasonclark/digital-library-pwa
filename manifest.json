@@ -6,6 +6,7 @@
   "background_color": "#213c69",
   "description": "A digital library template app",
   "theme_color": "#213c69",
+  "prefer_related_applications": false,
   "categories": ["books", "education"],
   "icons": [
     {
