@@ -129,7 +129,7 @@ input.text:focus {border-color:#66afe9;outline:0;-webkit-box-shadow:inset 0 1px 
 input.submit {padding:6px 12px;margin-bottom:0;background:#6A7389;color:#fff;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-image:none;border:1px solid transparent;border-radius:4px}
 .hidden {border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;}
 
-ul.item {list-style: none;}
+ul.item {list-style: none;margin:0;padding:0;}
 
 .featured {
   display: flex;
