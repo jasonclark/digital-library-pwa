@@ -40,6 +40,12 @@
   </footer>
   <script src="./app.js"></script>
   <script>
+  //set canonical link
+  let link = document.createElement('link');
+  link.setAttribute('rel', 'canonical');
+  link.setAttribute('href', location.protocol + '//' + location.host + location.pathname + '?' + location.search.substring(1));
+  document.head.appendChild(link);
+
   function getQueryVariable(variable) {
     const query = window.location.search.substring(1);
     const vars = query.split('&');
