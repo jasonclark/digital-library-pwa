@@ -12,10 +12,15 @@ class DigLibApp {
     }
     this.addLoadingIndicatorDelay();
 
-    await this.loadFeatured();
-    //await this.loadItem();
-    await this.loadTimeline();
+    //check for filename; run featured and timeline functions based on HTML page
+    let url = new URL(window.location);
+    let fileName = url.pathname.substring(url.pathname.lastIndexOf('/')+1);
 
+    if (fileName === 'index.html' || !fileName || fileName.trim === '') {
+      await this.loadFeatured();
+      await this.loadTimeline();
+    }
+    //await this.loadItem();
   }
 
   addLoadingIndicatorDelay() {
