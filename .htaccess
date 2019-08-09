@@ -25,3 +25,23 @@
   #RewriteCond %{REQUEST_FILENAME}.html -f
   #RewriteRule ^(.*)$ $1.html [L,QSA]
 </IfModule>
+#specify 'strict-transport-security' header to force HTTPS connections
+#https://https.cio.gov/hsts/
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+#serve all resources labeled as `text/html` or `text/plain` with the media type `charset` parameter set to `utf-8`.
+#https://httpd.apache.org/docs/current/mod/core.html#adddefaultcharset
+AddDefaultCharset utf-8
+#serve resources with the proper media types (f.k.a. MIME types).
+#https://www.iana.org/assignments/media-types/media-types.xhtml
+#serve the following file types with the media type `charset` parameter set to `utf-8`.
+#https://httpd.apache.org/docs/current/mod/mod_mime.html#addcharset
+<IfModule mod_mime.c>
+  DefaultLanguage en
+  AddLanguage en-US .html .css .js
+  AddCharset utf-8 .html .css .js .xml .json .rss .atom
+  AddType application/javascript js
+  AddType application/json json
+  AddType application/xml atom rdf rss xml
+</IfModule>
