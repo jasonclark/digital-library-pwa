@@ -251,3 +251,13 @@ footer {
 @media all and (min-width: 375px) {
   nav a {font-size:1.1rem;padding-right:var(--spacing);}
 }
+/*setting dark mode view based on system preferences*/
+@media (prefers-color-scheme: dark) {
+  body {background-color:#272727;color:#ffffff;}
+  a {color:var(--light-color);}
+  a:visited,a:active {color:var(--light-color);}
+  header {background:var(--base-color);}
+  .title-and-creator .title {border-bottom: 2px solid var(--base-color);}
+  .timeline-item .description {color:var(--base-color);}
+  footer, footer a, footer a:visited, footer a:active {background:var(--base-color);color:var(--light-color);}
+}
