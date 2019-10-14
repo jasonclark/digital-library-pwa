@@ -254,6 +254,7 @@ footer {
 /*setting dark mode view based on system preferences*/
 @media (prefers-color-scheme: dark) {
   body {background-color:#272727;color:#ffffff;}
+  img {filter:brightness(.8) contrast(1.2);}
   a {color:var(--light-color);}
   a:visited,a:active {color:var(--light-color);}
   header {background:var(--base-color);}
