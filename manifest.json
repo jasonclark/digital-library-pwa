@@ -1,7 +1,7 @@
 {
   "name": "James Willard Schultz Collection",
   "short_name": "SchultzPWA",
-  "start_url": ".",
+  "start_url": "./?utm_source=homescreen",
   "display": "standalone",
   "background_color": "#213c69",
   "description": "A digital library template app",
