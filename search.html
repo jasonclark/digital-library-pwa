@@ -30,7 +30,7 @@
     <h2>Search James Willard Schultz Collection</h2>
     <form action="./search.html" class="search-form" id="search-form" method="GET" role="search">
       <label class="hidden" for="search-term">Search</label>
-      <input class="text" type="search" id="search-term" name="q" maxlength="75" placeholder="Keywords, title..."/>
+      <input class="text" type="search" id="q" name="q" maxlength="75" placeholder="Keywords, title..."/>
       <input class="submit" type="submit" value="Search" />                
     </form>
     <p id="search-message" aria-live="polite">Use the <a href="#search-form">search form</a> above to search for items.</p>
@@ -46,29 +46,153 @@
   </footer>
   <script src="./app.js"></script>
   <script>
-  function getQueryVariable(variable) {
-    const query = window.location.search.substring(1);
-    const vars = query.split('&');
+//Variables
+const form = document.querySelector('#search-form');
+const input = document.querySelector('#q');
+const url = 'items.json';
+const message = document.querySelector('#search-message');
+const results = document.querySelector('#search-results');
 
-    for (let i = 0; i < vars.length; i++) {
-      const pair = vars[i].split('=');
-
-      if (pair[0] === variable) {
-        return decodeURIComponent(pair[1].replace(/\+/g, '%20'));
-      }
-    }
+//Methods
+//get query string value based on key
+async function getUrlParameter(name) {
+  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  let key = regex.exec(location.search);
+  return key === null ? '' : decodeURIComponent(key[1].replace(/\+/g, ' '));
+}
+//retrieve json file and report any errors that occur
+async function fetchData(endpoint) {
+  const response = await fetch(endpoint);
+  if (!response.ok) {
+    throw new Error(response.status); // 404
   }
+  const data = await response.json();
+  return data;
+}
+//fetch datastore file, search, and parse for display
+fetchData(url)
+  .then(data => {
+    form.onsubmit = () => {
+      message.innerHTML = "";
+      results.innerHTML = "";
+      let searchterm = input.value || getUrlParameter('q');
+      let searchtermlower = searchterm.toLowerCase();
+      let j = 0;
+
+      for (let i = 0; i < data.length; i++) {
+        let datalower = (data[i].item.titleInfo_title).toLowerCase();
+
+        if (datalower.includes(searchtermlower)) {
+          results.innerHTML += `
+              <li>
+                <a href="./item.html?id=${data[i].item.recordInfo_recordIdentifier}">
+                <img alt="${data[i].item.titleInfo_title}" src="${data[i].item.identifier}" />
+                </a>
+                <p><a href="./item.html?id=${data[i].item.recordInfo_recordIdentifier}">${data[i].item.titleInfo_title}</a></p>
+                <p>${data[i].item.abstract}</p>
+                <p>${data[i].item.extension}</p>
+                <p>${data[i].item.originInfo_dateIssued}</p>
+              </li>
+              `;
+          j++;
+        }
+      }
+
+      message.innerHTML += `Your search for <em>${searchterm}</em> has ${j} result(s)`;
+      return false;
+    };
+  })
+  .catch(error => console.log('Ooops, error', error.message));
+
+  /*
+  fetch('./items.json').then(response => {
+    if (response.ok) {
+      response.json().then(data => {
+        //data = json;
+
+        document.getElementById("search-form").onsubmit = () => {
+          searchterm = document.getElementById("q").value || getUrlParameter("q");
+          searchtermlower = searchterm.toLowerCase();
+          searchtermlength = searchterm.length;
+          document.getElementById("search-message").innerHTML = "";
+          document.getElementById("search-results").innerHTML = "";
+          j = 0;
+
+          for (i = 0; i < data.length; i++) {
+            datalower = (data[i].item.titleInfo_title).toLowerCase();
+
+            if (datalower.includes(searchtermlower)) {
+              document.getElementById("search-results").innerHTML += `
+              <li>
+                <a href="./item.html?id=${data[i].item.recordInfo_recordIdentifier}">
+                <img alt="${data[i].item.titleInfo_title}" src="${data[i].item.identifier}" />
+                </a>
+                <p><a href="./item.html?id=${data[i].item.recordInfo_recordIdentifier}">${data[i].item.titleInfo_title}</a></p>
+                <p>${data[i].item.abstract}</p>
+                <p>${data[i].item.extension}</p>
+                <p>${data[i].item.originInfo_dateIssued}</p>
+              </li>
+              `;
+              j++;
+              //change URL to reflect query
+              window.location.href = "./search.html?q=" + searchterm;
+            }
+          }
+
+          document.getElementById("search-message").innerHTML += `Your search for <em>${searchterm}</em> has ${j} result(s)`;
+          return false;
+        }
+      });
+    } else {
+      console.log(`Request for items.json failed with response ${response.status}: ${response.statusText}`);
+    }
+  });
+
+
+;(function (window, document, undefined) {
+
+  //'use strict';
+
+  // Variables
+  const form = document.querySelector('#search-form');
+  const input = document.querySelector('#q');
+  const url = './items.json';
+  const message = document.querySelector('#search-message');
+  const resultList = document.querySelector('#search-results');
+
+  // Inits & Event Listeners
+
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  };
+
+  // Handle submit events
+  var submitHandler = function (event) {
+	event.preventDefault();
+	window.location.href = "./search.html?q=" + input.value;
+  };
+
+  // Make sure required content exists
+  //if (!form || !input || !message || !resultList || !searchIndex) return;
+  //if (!form || !input || !message || !resultList) return;
+
+  // Create a submit handler
+  form.addEventListener('submit', submitHandler, false);
 
   // use fetch to retrieve json file and report any errors that occur
   fetch('./items.json').then(response => {
     if (response.ok) {
-      response.json().then(json => {
-        data = json;
+      response.json().then(data => {
+        //data = json;
 
         document.getElementById("search-form").onsubmit = () => {
           document.getElementById("search-message").innerHTML = "";
           document.getElementById("search-results").innerHTML = "";
-          searchterm = document.getElementById("search-term").value || getQueryVariable('q');
+          searchterm = document.getElementById("q").value || getUrlParameter('q');
           searchtermlower = searchterm.toLowerCase();
           searchtermlength = searchterm.length;
           j = 0;
@@ -100,6 +224,9 @@
       console.log(`Request for items.json failed with response ${response.status}: ${response.statusText}`);
     }
   });
+
+})(window, document);
+*/
   </script>
 </body>
 </html>
