@@ -79,6 +79,7 @@
       let searchterm = input.value || getUrlParameter('q');
       let searchtermlower = searchterm.toLowerCase();
       let j = 0;
+      history.pushState(null, null, '?q='+searchterm);
 
       for (let i = 0; i < data.length; i++) {
         let datalower = (data[i].item.titleInfo_title).toLowerCase();
