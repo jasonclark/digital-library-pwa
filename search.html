@@ -58,8 +58,8 @@
   async function getUrlParameter(name) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    let key = regex.exec(location.search);
-    return key === null ? '' : decodeURIComponent(key[1].replace(/\+/g, ' '));
+    let keys = regex.exec(location.search);
+    return keys === null ? '' : decodeURIComponent(keys[1].replace(/\+/g, ' '));
   }
   //retrieve json file and report any errors that occur
   async function fetchData(endpoint) {
