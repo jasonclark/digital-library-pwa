@@ -2,13 +2,16 @@
   box-sizing: border-box;
 }
 
-html {
+:root {
   --base-color: #444;
   --dark-color: #213c69;
   --light-color: #f4f5f7;
   --success-color: #f0f8f1;
   --warning-color: #fbeeec;
   --spacing: 16px;
+}
+
+html {
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
