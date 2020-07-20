@@ -82,6 +82,15 @@
             let fileName = urlPath.substring(urlPath.lastIndexOf('/')+1).split('-').pop();
 
             if (itemID === queryID) {
+              //set <title> tag using unique item title from items.json file
+              let pageTitle = data[i].item.titleInfo_title + ' | James Willard Schultz Collection, Montana State University (MSU) Library';
+              //document.querySelector('title').textContent = pageTitle;
+              document.title = pageTitle;
+
+              //set <meta> description tag using unique item description from items.json file
+              let metaDescription = data[i].item.abstract + ' | James Willard Schultz Collection, Montana State University (MSU) Library';
+              document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
+            
               document.querySelector('.item').innerHTML += `
               <h2>${data[i].item.titleInfo_title}</h2>
               <ul class="item">
