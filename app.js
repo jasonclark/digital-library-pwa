@@ -53,7 +53,8 @@ class DigLibApp {
   async loadFeatured() {
     this.featured = await this.fetchJSON('./items.json');
 
-    this.featuredDiv.innerHTML = this.featured
+    this.featuredDiv.innerHTML = this.featured.slice(0,4)
+    //this.featuredDiv.innerHTML = this.featured
       .map(this.toFeatureBlock)
       .join('\n');
   }
@@ -72,7 +73,8 @@ class DigLibApp {
     const rawTimeline = await this.fetchJSON('./items.json');
 
     this.timeline = rawTimeline.map(this.addObjectDetails, this);
-    this.timelineDiv.innerHTML = this.timeline
+    this.timelineDiv.innerHTML = this.timeline.slice(0,4)
+    //this.timelineDiv.innerHTML = this.timeline
       .map(this.toTimelineBlock)
       .join('\n');
   }
