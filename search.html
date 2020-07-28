@@ -50,7 +50,7 @@
   //Variables
   const form = document.querySelector('#search-form');
   const input = document.querySelector('#q');
-  const url = 'items.json';
+  const datastore = 'items.json';
   const message = document.querySelector('#search-message');
   const results = document.querySelector('#search-results');
 
@@ -72,7 +72,7 @@
     return data;
   }
   //fetch datastore file, search, and parse for display
-  fetchData(url)
+  fetchData(datastore)
   .then(data => {
     form.onsubmit = () => {
       message.innerHTML = "";
