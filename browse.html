@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>Browse - James Willard Schultz Collection, Montana State University (MSU) Library</title>
+  <link rel="stylesheet" href="./styles.css" media="print" onload="this.media='all'"/>
+  <link rel="manifest" href="./manifest.json"/>
+  <link rel="preconnect" href="https://arc.lib.montana.edu" crossorigin/>
+  <link rel="dns-prefetch" href="https://arc.lib.montana.edu"/>
+  <link rel="icon" type="image/png" href="./img/icons/favicon.png"/>
+  <meta name="theme-color" content="#213c69"/>
+  <meta name="description" content="Browse a featured image and timeline view of the James Willard Schultz Photos & Personal Papers Collection at Montana State University (MSU) Library. James Willard Schultz Photos & Personal Papers Collection includes photos & documents of Blackfeet, Blood, Kootenai, Shoshone and Arapaho Native Americans, Glacier and Waterton Lakes National Parks, as well as his professional writing career and personal papers."/>
+  <!-- iOS -->
+  <link rel="apple-touch-icon" href="./img/icons/icon-144x144.png"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="mobile-web-app-title" content="SchultzPWA"/>
+  <meta property="og:title" content="Montana State University (MSU) Library Progressive Web App"/>
+  <meta property="og:description" content="A progressive web app using the MSU James Willard Schultz Collection."/>
+  <meta property="og:image" content="https://www.lib.montana.edu/~jason/files/digital-library-pwa/img/icons/icon-192x192.png"/>
+  <meta property="og:url" content="https://www.lib.montana.edu/~jason/files/digital-library-pwa/"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:creator" property="og:site_name" content="@msulibrary"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:site" content="https://www.lib.montana.edu"/>
+</head>
+<body>
+  <header role="banner">
+    <h1>James Willard Schultz Collection</h1>
+  </header>
+  <nav role="navigation">
+    <a href="./index.html">Home</a>
+    <a href="./search.html">Search</a>
+    <a href="./browse.html">Browse</a>
+    <a href="./about.html">About</a>
+  </nav>
+  <div class="alert" role="alert" hidden>Your browser does not support ServiceWorker. The app will not be available offline.</div>
+  <main role="main">
+    <p>James Willard Schultz Photos & Personal Papers Collection includes photos & documents of Blackfeet, Blood, Kootenai, Shoshone and Arapaho Native Americans, Glacier and Waterton Lakes National Parks, as well as his professional writing career and personal papers.</p>
+    <h2 id="featured">Featured</h2>
+    <div class="featured" aria-live="polite">
+      <div class="loader" hidden>Loading...</div>
+    </div>
+    <h2 id="browse">Browse</h2>
+    <p>
+      a timeline view of the collection
+    </p>
+    <div class="timeline">
+      <div class="loader" hidden>Loading...</div>
+    </div>
+  </main>
+  <footer role="contentinfo">
+    <p>© Copyright Montana State University (MSU) Library</p>
+    <p>
+      Created by
+      <a href="https://twitter.com/jaclark">@jaclark</a>, the source code is available on
+      <a href="https://github.com/jasonclark">GitHub</a>.
+    </p>
+  </footer>
+  <script src="./app.js"></script>
+</body>
+</html>
