@@ -1,5 +1,6 @@
 class DigLibApp {
-  constructor() {
+  
+  constructor() { 
     this.featuredDiv = document.querySelector('.featured');
     //this.itemDiv = document.querySelector('.item');
     this.timelineDiv = document.querySelector('.timeline');
@@ -11,12 +12,8 @@ class DigLibApp {
       this.setupNavIntersectionObserver();
     }
     this.addLoadingIndicatorDelay();
-
     //check for filename; run featured and timeline functions based on HTML page
-    let url = new URL(window.location);
-    let fileName = url.pathname.substring(url.pathname.lastIndexOf('/')+1);
-
-    if (fileName === 'index.html' || !fileName || fileName.trim === '') {
+    if (fileName === 'browse.html' || fileName === 'index.html' || !fileName || fileName.trim === '') {
       await this.loadFeatured();
       await this.loadTimeline();
     }
@@ -24,7 +21,7 @@ class DigLibApp {
   }
 
   addLoadingIndicatorDelay() {
-    // Only show spinner if we're delayed more than 1s
+    //only show spinner if we're delayed more than 1s
     setTimeout(() => {
       Array.from(document.querySelectorAll('.loader')).forEach(loader => {
         loader.removeAttribute('hidden');
@@ -52,11 +49,12 @@ class DigLibApp {
 
   async loadFeatured() {
     this.featured = await this.fetchJSON('./items.json');
-
-    this.featuredDiv.innerHTML = this.featured.slice(0,4)
-    //this.featuredDiv.innerHTML = this.featured
-      .map(this.toFeatureBlock)
-      .join('\n');
+    //check for filename; run unique featured functions based on HTML page
+    if (fileName === 'index.html' || !fileName || fileName.trim === '') {
+      this.featuredDiv.innerHTML = this.featured.slice(0,4).map(this.toFeatureBlock).join('\n');
+    } else {
+      this.featuredDiv.innerHTML = this.featured.map(this.toFeatureBlock).join('\n');
+    }
   }
   /*
   async loadItem(id) {
@@ -71,12 +69,13 @@ class DigLibApp {
   */
   async loadTimeline() {
     const rawTimeline = await this.fetchJSON('./items.json');
-
     this.timeline = rawTimeline.map(this.addObjectDetails, this);
-    this.timelineDiv.innerHTML = this.timeline.slice(0,4)
-    //this.timelineDiv.innerHTML = this.timeline
-      .map(this.toTimelineBlock)
-      .join('\n');
+    //check for filename; run unique timeline functions based on HTML page
+    if (fileName === 'index.html' || !fileName || fileName.trim === '') {
+      this.timelineDiv.innerHTML = this.timeline.slice(0,4).map(this.toTimelineBlock).join('\n');
+    } else {
+      this.timelineDiv.innerHTML = this.timeline.map(this.toTimelineBlock).join('\n');
+    }
   }
 
   toFeatureBlock(items) {
@@ -131,6 +130,11 @@ class DigLibApp {
     return res.json();
   }
 }
+
+//get filename; add to global scope; run featured and timeline functions based on HTML page
+const url = new URL(window.location);
+const fileName = url.pathname.substring(url.pathname.lastIndexOf('/')+1);
+
 window.addEventListener('load', e => {
   new DigLibApp();
   registerSW();
