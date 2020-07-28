@@ -11,6 +11,7 @@ const offlinePage = './offline.html';
 const coreAssets = [
   './',
   './about.html',
+  './browse.html',
   './index.html',
   './item.html',
   './search.html',
