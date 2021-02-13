@@ -79,32 +79,56 @@
           }
 
           for (i = 0; i < data.length; i++) {
-            let itemID = Number(data[i].item.recordInfo_recordIdentifier);
+            const itemID = Number(data[i].item.recordInfo_recordIdentifier);
+            const itemTitle = `${data[i].item.titleInfo_title}`;
+            const itemCreator = `${data[i].item.name_namePart}`;
+            const itemDescription = `${data[i].item.abstract}`;
+            const itemKeywords = `${data[i].item.extension}`;
+            const itemImgURL = `${data[i].item.identifier}`;
+            const itemPageURL = `${location.protocol}//${location.host}${location.pathname}?${location.search.substring(1)}`;
+            const itemDatePublished = `${data[i].item.originInfo_dateIssued}`;
             //get filename from identifier -> unique given this data in items.json
             let urlPath = data[i].item.identifier;
-            let fileName = urlPath.substring(urlPath.lastIndexOf('/')+1).split('-').pop();
+            let itemFileName = urlPath.substring(urlPath.lastIndexOf('/')+1).split('-').pop();
 
             if (itemID === queryID) {
               //set <title> tag using unique item title from items.json file
-              let pageTitle = data[i].item.titleInfo_title + ' | James Willard Schultz Collection, Montana State University (MSU) Library';
+              let pageTitle = `${itemTitle} | James Willard Schultz Collection, Montana State University (MSU) Library`;
               //document.querySelector('title').textContent = pageTitle;
               document.title = pageTitle;
 
               //set <meta> description tag using unique item description from items.json file
-              let metaDescription = data[i].item.abstract + ' | James Willard Schultz Collection, Montana State University (MSU) Library';
+              let metaDescription = `${itemDescription} | James Willard Schultz Collection, Montana State University (MSU) Library`;
               document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
-            
+
+              //set schema.org json-ld <script>
+              const  jsonld = document.createElement('script');
+              jsonld.type = 'application/ld+json';
+              jsonld.text = JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "CreativeWork",
+                "name": `${itemTitle}`,
+                "creator": {"@type": "Person", "name": `${itemCreator}`},
+                "url": `${itemPageURL}`,
+                "thumbnailUrl": `${itemImgURL}`,
+                "datePublished": `${itemDatePublished}`,
+                "description": `${itemDescription}`
+              });
+              document.querySelector('head').appendChild(jsonld);
+
+              //set HTML output for user
               document.querySelector('.item').innerHTML += `
-              <h2>${data[i].item.titleInfo_title}</h2>
+              <h2>${itemTitle}</h2>
               <ul class="item">
               <li>
-                <img alt="${data[i].item.titleInfo_title}" src="${data[i].item.identifier}" height="120" width="160" />
-                <p>${data[i].item.titleInfo_title}</p>
-                <p>${data[i].item.abstract}</p>
-                <p>${data[i].item.extension}</p>
-                <p>${data[i].item.originInfo_dateIssued}</p>
-                <p>Record ID: ${data[i].item.recordInfo_recordIdentifier}</p>
-                <a class="quality" href="https://arc.lib.montana.edu/schultz-0010/objects/hres-${fileName}">Object view</a>
+                <img alt="${itemTitle}" src="${itemImgURL}" height="120" width="160" />
+                <p>${itemTitle}</p>
+                <p>${itemCreator}</p>
+                <p>${itemDescription}</p>
+                <p>${itemKeywords}</p>
+                <p>${itemDatePublished}</p>
+                <p>Record ID: ${itemID}</p>
+                <a class="quality" href="https://arc.lib.montana.edu/schultz-0010/objects/hres-${itemFileName}">Object view</a>
               </li>
               </ul>
               `;
