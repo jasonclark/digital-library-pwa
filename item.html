@@ -89,7 +89,7 @@
             const itemDatePublished = `${data[i].item.originInfo_dateIssued}`;
             //get filename from identifier -> unique given this data in items.json
             let urlPath = data[i].item.identifier;
-            let itemFileName = urlPath.substring(urlPath.lastIndexOf('/')+1).split('-').pop();
+            let itemFilename = urlPath.substring(urlPath.lastIndexOf('/')+1).split('-').pop();
 
             if (itemID === queryID) {
               //set <title> tag using unique item title from items.json file
@@ -128,7 +128,7 @@
                 <p>${itemKeywords}</p>
                 <p>${itemDatePublished}</p>
                 <p>Record ID: ${itemID}</p>
-                <a class="quality" href="https://arc.lib.montana.edu/schultz-0010/objects/hres-${itemFileName}">Object view</a>
+                <a class="quality" href="https://arc.lib.montana.edu/schultz-0010/objects/hres-${itemFilename}">Object view</a>
               </li>
               </ul>
               `;
