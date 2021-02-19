@@ -56,7 +56,19 @@ class DigLibApp {
       this.featuredDiv.innerHTML = this.featured.map(this.toFeatureBlock).join('\n');
     }
   }
-  /*
+
+  async loadTimeline() {
+    const rawTimeline = await this.fetchJSON('./items.json');
+    this.timeline = rawTimeline.map(this.addObjectDetails, this);
+    //check for filename; run unique timeline functions based on HTML page
+    if (fileName === 'index.html' || !fileName || fileName.trim === '') {
+      this.timelineDiv.innerHTML = this.timeline.slice(0,4).sort((a, b) => parseFloat(a.item.originInfo_dateIssued) - parseFloat(b.item.originInfo_dateIssued)).map(this.toTimelineBlock).join('\n');
+    } else {
+      this.timelineDiv.innerHTML = this.timeline.sort((a, b) => parseFloat(a.item.originInfo_dateIssued) - parseFloat(b.item.originInfo_dateIssued)).map(this.toTimelineBlock).join('\n');
+    }
+  }  
+
+/*
   async loadItem(id) {
     const id = getQueryVariable('id');
     const rawItems = await this.fetchJSON('./items.json');
@@ -66,17 +78,7 @@ class DigLibApp {
       .map(this.toItemBlock)
       .join('\n');
   }
-  */
-  async loadTimeline() {
-    const rawTimeline = await this.fetchJSON('./items.json');
-    this.timeline = rawTimeline.map(this.addObjectDetails, this);
-    //check for filename; run unique timeline functions based on HTML page
-    if (fileName === 'index.html' || !fileName || fileName.trim === '') {
-      this.timelineDiv.innerHTML = this.timeline.slice(0,4).map(this.toTimelineBlock).join('\n');
-    } else {
-      this.timelineDiv.innerHTML = this.timeline.map(this.toTimelineBlock).join('\n');
-    }
-  }
+*/
 
   toFeatureBlock(items) {
     return `
@@ -87,7 +89,8 @@ class DigLibApp {
           </a>
         </div>`;
   }
-  /*
+
+/*
   toItemBlock(items) {
     return `
         <h2>Item: ${items.item.titleInfo_title}</h2>
@@ -98,7 +101,8 @@ class DigLibApp {
           <p>${items.item.originInfo_dateIssued}</p>
         </li>`;
   }
-  */
+*/
+
   toTimelineBlock(items) {
     return `
       <div class="timeline-item ${items.item.genre}">
