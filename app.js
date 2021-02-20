@@ -84,7 +84,7 @@ class DigLibApp {
     return `
         <div class="feature-item">
           <a href="./item.html?id=${items.item.recordInfo_recordIdentifier}">
-	  <img src="${items.item.identifier}" loading="lazy" alt="${items.item.titleInfo_title}">
+	  <img src="${items.item.identifier}" width="160" height="120" loading="lazy" alt="${items.item.titleInfo_title}">
           <div>${items.item.originInfo_dateIssued}</div>
           </a>
         </div>`;
