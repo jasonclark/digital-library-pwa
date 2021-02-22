@@ -51,9 +51,10 @@ class DigLibApp {
     this.featured = await this.fetchJSON('./items.json');
     //check for filename; run unique featured functions based on HTML page
     if (fileName === 'index.html' || !fileName || fileName.trim === '') {
-      this.featuredDiv.innerHTML = this.featured.slice(0,4).map(this.toFeatureBlock).join('\n');
+      //this.featuredDiv.innerHTML = this.featured.slice(0,4).map(this.toFeatureBlock).join('\n');
+      this.featuredDiv.innerHTML = this.featured.splice(Math.floor(Math.random()*this.featured.length),4).sort((a, b) => parseFloat(a.item.originInfo_dateIssued) - parseFloat(b.item.originInfo_dateIssued)).map(this.toFeatureBlock).join('\n');
     } else {
-      this.featuredDiv.innerHTML = this.featured.map(this.toFeatureBlock).join('\n');
+      this.featuredDiv.innerHTML = this.featured.sort((a, b) => parseFloat(a.item.originInfo_dateIssued) - parseFloat(b.item.originInfo_dateIssued)).map(this.toFeatureBlock).join('\n');
     }
   }
 
