@@ -63,7 +63,7 @@ class DigLibApp {
     this.timeline = rawTimeline.map(this.addObjectDetails, this);
     //check for filename; run unique timeline functions based on HTML page
     if (fileName === 'index.html' || !fileName || fileName.trim === '') {
-      this.timelineDiv.innerHTML = this.timeline.slice(0,4).sort((a, b) => parseFloat(a.item.originInfo_dateIssued) - parseFloat(b.item.originInfo_dateIssued)).map(this.toTimelineBlock).join('\n');
+      this.timelineDiv.innerHTML = this.timeline.splice(Math.floor(Math.random()*this.timeline.length),4).sort((a, b) => parseFloat(a.item.originInfo_dateIssued) - parseFloat(b.item.originInfo_dateIssued)).map(this.toTimelineBlock).join('\n');
     } else {
       this.timelineDiv.innerHTML = this.timeline.sort((a, b) => parseFloat(a.item.originInfo_dateIssued) - parseFloat(b.item.originInfo_dateIssued)).map(this.toTimelineBlock).join('\n');
     }
