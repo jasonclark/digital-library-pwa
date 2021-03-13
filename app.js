@@ -130,13 +130,18 @@ class DigLibApp {
   }
 
   async fetchJSON(url) {
-    const res = await fetch(url);
-    return res.json();
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(response.status); // 404
+    }
+    return response.json();
   }
 }
 
-//get filename; add to global scope; run featured and timeline functions based on HTML page
+//get siteUrl and filename; add to global scope
+//current use: run featured/timeline functions based on HTML page
 const url = new URL(window.location);
+const siteUrl = `${url.protocol}//${url.host}${url.pathname.substring(0,url.pathname.lastIndexOf("/")+1)}`;
 const fileName = url.pathname.substring(url.pathname.lastIndexOf('/')+1);
 
 window.addEventListener('load', e => {
