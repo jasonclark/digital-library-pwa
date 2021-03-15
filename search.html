@@ -48,56 +48,58 @@
     </p>
   </footer>
   <script src="./app.js"></script>
-  <script>
+<script>
   //testing ability to load/override HTML values in certain tags; see hidden <input id="sites>
   //Note: siteUrl is global variable in app.js
   //document.getElementById('sites').value = siteUrl;
 
-//Variables
-const form = document.querySelector('#search-form');
-const input = document.querySelector('#q');
-const urlParams = new URLSearchParams(window.location.search);
-const queryValue = urlParams.get('q')
-console.log(queryValue);
-const q = queryValue || input.value;
-const datastore = 'items.json';
-const message = document.querySelector('#search-message');
-const results = document.querySelector('#search-results');
+  //Variables
+  const form = document.querySelector("#search-form");
+  const input = document.querySelector("#q");
+  const urlParams = new URLSearchParams(window.location.search);
+  const queryValue = urlParams.get("q");
+  console.log(queryValue);
+  const q = queryValue || input.value;
+  const datastore = "items.json";
+  const message = document.querySelector("#search-message");
+  const results = document.querySelector("#search-results");
 
-//Methods
-//retrieve json file and report any errors that occur
-async function fetchData(endpoint) {
-  const response = await fetch(endpoint);
-  if (!response.ok) {
-    throw new Error(response.status); // 404
+  //Methods
+  //retrieve json file and report any errors that occur
+  async function fetchData(endpoint) {
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+      throw new Error(response.status); // 404
+    }
+    const data = await response.json();
+    return data;
   }
-  const data = await response.json();
-  return data;
-}
 
-form.addEventListener('submit', () => {
-  event.preventDefault();
-  if (q !== null) { search(q) };
-});
+  form.addEventListener("submit", () => {
+    event.preventDefault();
+    if (q !== null) {
+      search(q);
+    }
+  });
 
-const search = function(query) {
+  const search = function (query) {
+    let searchIndex = fetchData(datastore);
 
-  let searchIndex = fetchData(datastore);
+    searchIndex
+      .then((data) => {
+        message.innerHTML = "";
+        results.innerHTML = "";
+        console.log(queryValue);
+        let searchTerm = queryValue || input.value;
+        let searchTermLower = searchTerm.toLowerCase();
+        let j = 0;
+        history.pushState(null, null, "?q=" + searchTerm);
 
-  searchIndex.then(data => {
-      message.innerHTML = "";
-      results.innerHTML = "";
-      console.log(queryValue);
-      let searchTerm = queryValue || input.value;
-      let searchTermLower = searchTerm.toLowerCase();
-      let j = 0;
-      history.pushState(null, null, '?q=' + searchTerm);
+        for (let i = 0; i < data.length; i++) {
+          let dataLower = data[i].item.titleInfo_title.toLowerCase();
 
-      for (let i = 0; i < data.length; i++) {
-        let dataLower = (data[i].item.titleInfo_title).toLowerCase();
-
-        if (dataLower.includes(searchTermLower)) {
-          results.innerHTML += `
+          if (dataLower.includes(searchTermLower)) {
+            results.innerHTML += `
               <li>
                 <a href="./item.html?id=${data[i].item.recordInfo_recordIdentifier}">
                 <img alt="${data[i].item.titleInfo_title}" src="${data[i].item.identifier}" />
@@ -108,15 +110,15 @@ const search = function(query) {
                 <p>${data[i].item.originInfo_dateIssued}</p>
               </li>
               `;
-          j++;
+            j++;
+          }
         }
-      }
 
-      message.innerHTML += `Your search for <em>${searchTerm}</em> has ${j} result(s)`;
-      return false;
-    })
-    .catch(error => console.log('Ooops, error', error.message));
-};
-  </script>
+        message.innerHTML += `Your search for <em>${searchTerm}</em> has ${j} result(s)`;
+        return false;
+      })
+      .catch((error) => console.log("Ooops, error", error.message));
+  };
+</script>
 </body>
 </html>
