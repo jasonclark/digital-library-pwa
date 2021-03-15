@@ -7,6 +7,7 @@
   <title>Search - James Willard Schultz Collection, Montana State University (MSU) Library</title>
   <link rel="stylesheet" href="./styles.css" media="print" onload="this.media='all'"/>
   <link rel="manifest" href="./manifest.json"/>
+  <link rel="search" type="application/opensearchdescription+xml" href="./opensearch.xml" title="James Willard Schultz Collection"/>
   <link rel="icon" type="image/png" href="./img/icons/favicon.png"/>
   <meta name="theme-color" content="#213c69"/>
   <meta name="description" content="Search the Progressive Web App Template for digital collections using James Willard Schultz Photos & Personal Papers Collection at Montana State University (MSU) Library. James Willard Schultz Photos & Personal Papers Collection includes photos & documents of Blackfeet, Blood, Kootenai, Shoshone and Arapaho Native Americans, Glacier and Waterton Lakes National Parks, as well as his professional writing career and personal papers."/>
@@ -32,6 +33,7 @@
     <form action="./search.html" class="search-form" id="search-form" method="GET" role="search">
       <label class="hidden" for="q">Search</label>
       <input class="text" type="search" id="q" name="q" maxlength="75" autofocus placeholder="Keywords, title..."/>
+      <!--<input type="hidden" name="sites" id="sites" value="your-domain.com"/>-->
       <input class="submit" type="submit" value="Search" />                
     </form>
     <p id="search-message" aria-live="polite">Use the <a href="#search-form">search form</a> above to search for items.</p>
@@ -47,45 +49,54 @@
   </footer>
   <script src="./app.js"></script>
   <script>
-  //Variables
-  const form = document.querySelector('#search-form');
-  const input = document.querySelector('#q');
-  const datastore = 'items.json';
-  const message = document.querySelector('#search-message');
-  const results = document.querySelector('#search-results');
+  //testing ability to load/override HTML values in certain tags; see hidden <input id="sites>
+  //Note: siteUrl is global variable in app.js
+  //document.getElementById('sites').value = siteUrl;
 
-  //Methods
-  //get query string value based on key
-  async function getUrlParameter(name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    let keys = regex.exec(location.search);
-    return keys === null ? '' : decodeURIComponent(keys[1].replace(/\+/g, ' '));
+//Variables
+const form = document.querySelector('#search-form');
+const input = document.querySelector('#q');
+const urlParams = new URLSearchParams(window.location.search);
+const queryValue = urlParams.get('q')
+console.log(queryValue);
+const q = queryValue || input.value;
+const datastore = 'items.json';
+const message = document.querySelector('#search-message');
+const results = document.querySelector('#search-results');
+
+//Methods
+//retrieve json file and report any errors that occur
+async function fetchData(endpoint) {
+  const response = await fetch(endpoint);
+  if (!response.ok) {
+    throw new Error(response.status); // 404
   }
-  //retrieve json file and report any errors that occur
-  async function fetchData(endpoint) {
-    const response = await fetch(endpoint);
-    if (!response.ok) {
-      throw new Error(response.status); // 404
-    }
-    const data = await response.json();
-    return data;
-  }
-  //fetch datastore file, search, and parse for display
-  fetchData(datastore)
-  .then(data => {
-    form.onsubmit = () => {
+  const data = await response.json();
+  return data;
+}
+
+form.addEventListener('submit', () => {
+  event.preventDefault();
+  if (q !== null) { search(q) };
+});
+
+const search = function(query) {
+
+  let searchIndex = fetchData(datastore);
+
+  searchIndex.then(data => {
       message.innerHTML = "";
       results.innerHTML = "";
-      let searchterm = input.value || getUrlParameter('q');
-      let searchtermlower = searchterm.toLowerCase();
+      console.log(queryValue);
+      let searchTerm = queryValue || input.value;
+      let searchTermLower = searchTerm.toLowerCase();
       let j = 0;
-      history.pushState(null, null, '?q='+searchterm);
+      history.pushState(null, null, '?q=' + searchTerm);
 
       for (let i = 0; i < data.length; i++) {
-        let datalower = (data[i].item.titleInfo_title).toLowerCase();
+        let dataLower = (data[i].item.titleInfo_title).toLowerCase();
 
-        if (datalower.includes(searchtermlower)) {
+        if (dataLower.includes(searchTermLower)) {
           results.innerHTML += `
               <li>
                 <a href="./item.html?id=${data[i].item.recordInfo_recordIdentifier}">
@@ -101,11 +112,11 @@
         }
       }
 
-      message.innerHTML += `Your search for <em>${searchterm}</em> has ${j} result(s)`;
+      message.innerHTML += `Your search for <em>${searchTerm}</em> has ${j} result(s)`;
       return false;
-    };
-  })
-  .catch(error => console.log('Ooops, error', error.message));
+    })
+    .catch(error => console.log('Ooops, error', error.message));
+};
   </script>
 </body>
 </html>
