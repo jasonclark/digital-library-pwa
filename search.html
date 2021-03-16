@@ -115,12 +115,14 @@
   };
   
   //Events
-  form.addEventListener("submit", () => {
-    event.preventDefault();
+  form.onsubmit = () => {
+  //form.addEventListener("submit", () => {
+    //event.preventDefault();
     if (q !== null) {
       search(q);
     }
-  });
+  //});
+  }
 
   if (queryValue !== null) {
   //if (window.location.href.indexOf("?") > -1) {
