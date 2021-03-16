@@ -75,12 +75,6 @@
     return data;
   }
 
-  form.addEventListener("submit", () => {
-    event.preventDefault();
-    if (q !== null) {
-      search(q);
-    }
-  });
 
   const search = function (query) {
     let searchIndex = fetchData(datastore);
@@ -119,6 +113,19 @@
       })
       .catch((error) => console.log("Ooops, error", error.message));
   };
+  
+  //Events
+  form.addEventListener("submit", () => {
+    event.preventDefault();
+    if (q !== null) {
+      search(q);
+    }
+  });
+
+  if (queryValue !== null) {
+  //if (window.location.href.indexOf("?") > -1) {
+    search(q);
+  }
 </script>
 </body>
 </html>
