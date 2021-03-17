@@ -65,7 +65,7 @@
   const results = document.querySelector("#search-results");
 
   //Methods
-  //retrieve json file and report any errors that occur
+  //retrieve data file and report any errors that occur
   async function fetchData(endpoint) {
     const response = await fetch(endpoint);
     if (!response.ok) {
@@ -74,8 +74,7 @@
     const data = await response.json();
     return data;
   }
-
-
+  //search data file and print HTML results
   const search = function (query) {
     let searchIndex = fetchData(datastore);
 
@@ -115,17 +114,14 @@
   };
   
   //Events
+  //submit form and run search function
   form.onsubmit = () => {
-  //form.addEventListener("submit", () => {
-    //event.preventDefault();
     if (q !== null) {
       search(q);
     }
-  //});
   }
-
+  //run search function if URL has q value
   if (queryValue !== null) {
-  //if (window.location.href.indexOf("?") > -1) {
     search(q);
   }
 </script>
