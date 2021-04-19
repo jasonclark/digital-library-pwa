@@ -26,6 +26,8 @@ body {
   color: var(--dark-color);
   font-size: 18px;
   line-height: 1.5rem;
+  min-width: 380px;
+  min-height: 800px;
 }
 
 [hidden] {
