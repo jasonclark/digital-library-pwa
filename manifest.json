@@ -1,13 +1,25 @@
 {
   "name": "James Willard Schultz Collection",
   "short_name": "SchultzPWA",
-  "start_url": "./?utm_source=homescreen",
+  "start_url": "./index.html?utm_source=homescreen",
   "display": "standalone",
   "background_color": "#213c69",
   "description": "A digital library template app",
   "theme_color": "#213c69",
   "prefer_related_applications": false,
   "categories": ["books", "education"],
+  "shortcuts" : [
+    {
+      "name": "Search items",
+      "url": "/search.html",
+      "description": "Search items in collection"
+    },
+    {
+      "name": "Browse items",
+      "url": "/browse.html",
+      "description": "Browse items in collections"
+    }
+  ]
   "icons": [
     {
       "src": "./img/icons/icon-72x72.png",
