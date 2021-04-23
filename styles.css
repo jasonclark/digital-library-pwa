@@ -152,6 +152,8 @@ ul.item {list-style: none;margin:0;padding:0;}
 }
 
 .timeline {
+  content-visibility: auto;
+  contain-intrinsic-size: 855px;
   margin-top: calc(4 * var(--spacing));
   min-height: 185px;
 }
