@@ -96,7 +96,7 @@ nav {
 }
 
 nav a {
-  font-size: 0.8rem;
+  font-size: 1rem;
   padding-right: calc(var(--spacing) / 2);
 }
 
@@ -245,18 +245,18 @@ footer {
     box-shadow: 0 2.5em 0 0;
   }
 }
-
-/*medium screen view < 801px (based on 16px browser default)*/
-@media all and (max-width:50.1em) {
+/*medium screen view <= 801px (based on 16px browser default)*/
+@media screen and (max-width:50.1) {
   header h1 {font-size:1.3em;}
   .featured .feature-item {padding-left:0;}
 }
-/*small screen view < 481px (based on 16px browser default)*/
-@media all and (max-width:30.063em) {
+/*small screen view <= 640px (based on 16px browser default)*/
+@media screen and (max-width: 40em) {
   header h1 {font-size:1em;}
   input.text {width:13em;}
 }
-@media all and (min-width: 375px) {
+/*default screen view >=375px (based on 16px browser default)*/
+@media screen and (min-width: 23.438em) {
   nav a {font-size:1.1rem;padding-right:var(--spacing);}
 }
 /*setting dark mode view based on system preferences*/
