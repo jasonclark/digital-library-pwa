@@ -1,5 +1,5 @@
 # digital-library-pwa
-Template for digital library progressive web app (PWA)... It is live at [SchultzPWA](https://www.lib.montana.edu/~jason/files/digital-library-pwa/).
+Template for digital library progressive web app (PWA)... It is live at [SchultzPWA](https://www.jasonclark.info/files/digital-library-pwa/).
 
 ## Technology
 
